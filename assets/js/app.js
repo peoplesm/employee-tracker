@@ -61,7 +61,11 @@ const promptUser = () => {
           break;
         case "Update an employee role":
           console.log("update emp role");
+          updateEmployee();
           break;
+        case "No Action":
+          console.log("No Action Taken, Bye!");
+          process.exit();
       }
     });
 };
@@ -288,6 +292,62 @@ const addEmployee = () => {
           });
       });
     });
+};
+
+const updateEmployee = () => {
+  console.log("Updateing an employee...\n");
+  const empSql = `SELECT * FROM employee`;
+  db.query(empSql, (err, data) => {
+    if (err) throw err;
+    const emps = data.map(({ id, first_name, last_name }) => ({
+      name: first_name + " " + last_name,
+      value: id,
+    }));
+
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "empData",
+          message: "Who would you like to update?",
+          choices: emps,
+        },
+      ])
+      .then((empChoice) => {
+        const emp = empChoice.empData;
+        const empParams = [];
+        empParams.push(emp);
+
+        const jobSql = `SELECT * FROM job`;
+        db.query(jobSql, (err, data) => {
+          if (err) throw err;
+          const jobs = data.map(({ id, title }) => ({
+            name: title,
+            value: id,
+          }));
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                name: "jobData",
+                message: "What is this employee's new role?",
+                choices: jobs,
+              },
+            ])
+            .then((jobChoice) => {
+              const job = jobChoice.jobData;
+              empParams.push(job);
+              const params = empParams.reverse();
+              const addEmpSql = `UPDATE employee SET job_id = ? WHERE id = ?`;
+              db.query(addEmpSql, params, (err, data) => {
+                if (err) throw err;
+                console.log("Employee has been updated");
+                showEmployees();
+              });
+            });
+        });
+      });
+  });
 };
 
 module.exports = promptUser;

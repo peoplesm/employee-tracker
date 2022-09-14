@@ -1,5 +1,4 @@
 const express = require("express");
-const consoleTable = require("console.table");
 const promptUser = require("./assets/js/app");
 
 const PORT = process.env.PORT || 3001;

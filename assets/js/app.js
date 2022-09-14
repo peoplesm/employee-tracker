@@ -67,10 +67,13 @@ const promptUser = () => {
           console.log("No Action Taken, Bye!");
           process.exit();
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
-showDepts = () => {
+const showDepts = () => {
   console.log("Showing all departments...\n");
   const sql = `SELECT department.id AS id,
       department.dept_name AS department
@@ -82,13 +85,14 @@ showDepts = () => {
   });
 };
 
-showRoles = () => {
+const showRoles = () => {
   console.log("Showing all roles...\n");
   const sql = `SELECT job.id,
-      job.title,
-      department.dept_name AS department
-  FROM job
-      INNER JOIN department ON job.department_id = department.id`;
+    job.title,
+    department.dept_name AS department,
+    salary
+FROM job
+    INNER JOIN department ON job.department_id = department.id`;
   db.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
@@ -96,7 +100,7 @@ showRoles = () => {
   });
 };
 
-showEmployees = () => {
+const showEmployees = () => {
   console.log("Showing all employees...\n");
   const sql = `SELECT employee.id,
       employee.first_name,
@@ -116,7 +120,7 @@ showEmployees = () => {
   });
 };
 
-addDept = () => {
+const addDept = () => {
   console.log("Adding a department...\n");
   inquirer
     .prompt([
@@ -141,10 +145,13 @@ addDept = () => {
         console.table(rows);
         showDepts();
       });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
-addRole = () => {
+const addRole = () => {
   console.log("Adding a role...\n");
   inquirer
     .prompt([
@@ -167,9 +174,9 @@ addRole = () => {
         message: "What is this role's salary?",
         validate: (addSalary) => {
           if (isNaN(addSalary)) {
+            console.log("Please enter a salary");
             return false;
           } else {
-            console.log("Please enter a salary");
             return true;
           }
         },
@@ -203,6 +210,9 @@ addRole = () => {
               console.log(`Added ${answer.role} to roles!`);
               showRoles();
             });
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
     });
@@ -287,6 +297,9 @@ const addEmployee = () => {
                     console.log("Employee was added!");
                     showEmployees();
                   });
+                })
+                .catch((err) => {
+                  console.log(err);
                 });
             });
           });
@@ -344,6 +357,9 @@ const updateEmployee = () => {
                 console.log("Employee has been updated");
                 showEmployees();
               });
+            })
+            .catch((err) => {
+              console.log(err);
             });
         });
       });

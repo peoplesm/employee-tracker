@@ -22,7 +22,10 @@ VALUES ("Matt", "Peoples", 3, null),
 ("Sam", "Samual", 5, null),
 ("Jack", "Johnson", 6, 5),
 ("Kimmy", "Kim", 7, null),
-("Lin", "Say", 8, 7);
+("Lin", "Say", 8, 7),
+("Nina", "Patina", 3, 1),
+("James", "Potter", 3, 1),
+("Jet", "Mungus", 6, 5);
 
 
 

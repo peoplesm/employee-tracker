@@ -214,9 +214,8 @@ const addDept = () => {
     ])
     .then((answer) => {
       const sql = `INSERT INTO department (dept_name) VALUES (?)`;
-      db.query(sql, answer.addDept, (err, rows) => {
+      db.query(sql, answer.addDept, (err, data) => {
         if (err) throw err;
-        console.table(rows);
         showDepts();
       });
     })

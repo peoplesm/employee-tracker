@@ -1,3 +1,4 @@
+//Declare variables
 const express = require("express");
 const promptUser = require("./assets/js/app");
 
@@ -23,6 +24,7 @@ let init = async () => {
                   | |             __/ |                                               
                   |_|            |___/                                                
 `);
+  //Calls promptUser fxn in app.js to start inquier
   promptUser();
 };
 

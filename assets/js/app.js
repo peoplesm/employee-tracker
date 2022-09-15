@@ -1,3 +1,4 @@
+//Load in dependencies
 const mysql = require("mysql2");
 require("console.table");
 const inquirer = require("inquirer");
@@ -13,6 +14,7 @@ const db = mysql.createConnection(
   console.log(`Connected to the employees_db database.`)
 );
 
+//Initial prompt
 const promptUser = () => {
   inquirer
     .prompt([
@@ -94,6 +96,7 @@ const promptUser = () => {
     });
 };
 
+//Fxns to show various aspects of the db based on different requests
 const showDepts = () => {
   console.log("Showing all departments...\n");
   const sql = `SELECT department.id AS id,
@@ -189,6 +192,8 @@ ORDER BY department.id`;
     promptUser();
   });
 };
+
+//Adding different things to the db
 const addDept = () => {
   console.log("Adding a department...\n");
   inquirer
@@ -376,6 +381,7 @@ const addEmployee = () => {
     });
 };
 
+//Update aspects of the db
 const updateEmployee = () => {
   console.log("Updateing an employee...\n");
   const empSql = `SELECT * FROM employee`;
@@ -493,6 +499,7 @@ const updateEmpMgmt = () => {
   });
 };
 
+//Delete aspects of the db
 const deleteEmployee = () => {
   console.log("Deleteing an employee...\n");
   const empSql = `SELECT * FROM employee`;

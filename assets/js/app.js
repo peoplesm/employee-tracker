@@ -383,7 +383,7 @@ const addEmployee = () => {
 
 //Update aspects of the db
 const updateEmployee = () => {
-  console.log("Updateing an employee...\n");
+  console.log("Updating an employee...\n");
   const empSql = `SELECT * FROM employee`;
   db.query(empSql, (err, data) => {
     if (err) throw err;
@@ -442,7 +442,7 @@ const updateEmployee = () => {
 };
 
 const updateEmpMgmt = () => {
-  console.log("Updateing an employee's manager...\n");
+  console.log("Updating an employee's manager...\n");
   const empSql = `SELECT * FROM employee`;
   db.query(empSql, (err, data) => {
     if (err) throw err;
